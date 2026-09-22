@@ -1,5 +1,53 @@
 import java.util.*;
+class student{
+    private String regNo;
+    private String name;
+    private String nic;
+    private int prfMarks;
+    private int dbmsMark;
 
+    public Student (String regNo,String name,String nic,int prfMarks,int dbmsMarks){
+        this.regNo = regNo;
+        this.name = name;
+        this.nic = nic;
+        this.prfMarks = prfMarks;
+        this.dbmsMarks = dbmsMarks;
+    }
+    public String getRegNo() { 
+        return regNo; 
+    }
+    public String getName() { 
+        return name; 
+    }
+    public void setName(String name) { 
+        this.name = name; 
+    }
+    public String getNic() { 
+        return nic; 
+    }
+    public void setNic(String nic) { 
+        this.nic = nic; 
+    }
+    public int getPrfMarks() { 
+        return prfMarks; 
+    }
+    public void setPrfMarks(int prfMarks) { 
+        this.prfMarks = prfMarks; 
+    }
+    public int getDbmsMarks() { 
+        return dbmsMarks; 
+    }
+    public void setDbmsMarks(int dbmsMarks) { 
+        this.dbmsMarks = dbmsMarks; 
+    }
+    
+}
+class Batch{
+
+
+
+    
+}
 class StudentManagementSystem {
 
     // Batch status variables
