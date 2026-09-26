@@ -699,64 +699,24 @@ private static Student[] studentArray  = new Student[] {
         System.out.print("Enter Batch Number : ");
         int batchNo = input.nextInt();
 
-        int index = -1;
-        for (int i = 0; i < batchArray.length; i++) {
-            if (batchArray[i].getBatchNo() == batchNo) {
-                index = i;
+        for (Batch b : batchArray) {
+            if (b.getBatchNo() == batchNo) {
+                b.setStatus(b.getStatus() == ENROLLMENT_OPEN ? ENROLLMENT_CLOSED : ENROLLMENT_OPEN);
+                System.out.println("\nBatch Status updated successfully.");
                 break;
             }
         }
 
-        if (index == -1) {
-            System.out.println("\nThis batch does not exist in the system.");
             System.out.print("\nDo you want to update another batch details (Y/N): ");
             String select = input.next().toUpperCase();
             if (select.equals("Y")) {
                 clearConsole();
-                updateBatch();
+                batchManagement();
             } else {
                 clearConsole();
-                batchManagement();
+                homePage();
             }
-            return;
         }
-
-        int currentStatus = batchStatusArray[index];
-        String currentStatusStr = "";
-        String nextStatusStr = "";
-
-        if (currentStatus == ENROLLMENTOPEN) {
-            currentStatusStr = "ENROLLMENT OPEN";
-            nextStatusStr = "ENROLLMENT CLOSED";
-        } else {
-            currentStatusStr = "ENROLLMENT CLOSED";
-            nextStatusStr = "ENROLLMENT OPEN";
-        }
-
-        System.out.println("Current Status : " + currentStatusStr);
-        System.out.print("\nDo you want to change the batch status to " + nextStatusStr + "(Y/N) ? ");
-        String confirm = input.next().toUpperCase();
-
-        if (confirm.equals("Y")) {
-            if (currentStatus == ENROLLMENTOPEN) {
-                batchStatusArray[index] = ENROLLMENTCLOSED;
-            } else {
-                batchStatusArray[index] = ENROLLMENTOPEN;
-            }
-            System.out.println("\n\tBatch Status updated successfully...");
-        }
-
-        System.out.print("\nDo you want to update another batch details (Y/N): ");
-        String select = input.next().toUpperCase();
-        if (select.equals("Y")) {
-            clearConsole();
-            updateBatch();
-        } else {
-            clearConsole();
-            batchManagement();
-        }
-    }
-
     // View Batches Method
     public static void viewBatches() {
         System.out.println("-----------------------------------------------------------------");
