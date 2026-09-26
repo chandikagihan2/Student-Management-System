@@ -507,20 +507,6 @@ private static Student[] studentArray  = new Student[] {
             studentManagement();
         }
     }
-
-    // GPA Calculator Method
-    public static double getGPAValue(int g) {
-        int[] ranges = {90, 80, 75, 70, 65, 60, 55, 50, 45, 40, 30, 20};
-        double[] gpa = {4.25, 4.00, 3.70, 3.30, 3.00, 2.70, 2.30, 2.00, 1.70, 1.30, 1.00, 0.70};
-        
-        for (int i = 0; i < ranges.length; i++) {
-            if (g >= ranges[i]) {
-                return gpa[i];
-            }
-        }
-        return 0.0;
-    }
-
     // View Student Profile Method
     public static void viewStudentProfile() {
         System.out.println("-----------------------------------------------------------------");
