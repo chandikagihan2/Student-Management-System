@@ -377,20 +377,22 @@ private static Student[] studentArray  = new Student[] {
 
     // Add Student Method
     public static void addStudent() {
+        Scanner input = new Scanner(System.in);
+        boolean continueAdding = true;
+
+    do {
+        clearConsole();
         System.out.println("-----------------------------------------------------------------");
         System.out.println("|\t\t\tAdd Student\t\t\t\t|");
         System.out.println("-----------------------------------------------------------------\n");
 
-        Scanner input = new Scanner(System.in);
-        System.out.print("\nEnter batch Number (Student should be added): ");
+       System.out.print("\nEnter batch Number (Student should be added): ");
         int batchNo = input.nextInt();
 
-        // Batch Check
         if (checkBatchStatus(batchNo)) {
             System.out.print("\nEnter student NIC: ");
             String nic = input.next();
 
-            // NIC Check
             if (checkNIC(nic)) {
                 System.out.print("\nEnter student name > ");
                 input.nextLine();
@@ -399,86 +401,32 @@ private static Student[] studentArray  = new Student[] {
                 System.out.print("\nEnter lecture mode (physical-1/online-0) > ");
                 int mode = input.nextInt();
 
-                String newRegNo = "";
-
-                // Registration No logic
                 if (mode == 1 || mode == 0) {
-                    String lastRegNo = regNoArray[regNoArray.length - 1];
-                    int lastNumber = Integer.parseInt(lastRegNo.substring(2));
-                    int nextNumber = lastNumber + 1;
+                    int nextNum = studentArray.length + 1;
+                    String prefix = (mode == 1) ? "PR" : "OR";
+                    String newRegNo = String.format("%s24%d%03d", prefix, batchNo, nextNum);
 
-                    if (mode == 1) {
-                        newRegNo = "PR" + nextNumber;
-                    } else {
-                        newRegNo = "OR" + nextNumber;
-                    }
-
-                    // NIC Array Update
-                    String[] tempNicArray = new String[nicArray.length + 1];
-                    for (int i = 0; i < nicArray.length; i++) {
-                        tempNicArray[i] = nicArray[i];
-                    }
-                    tempNicArray[tempNicArray.length - 1] = nic;
-                    nicArray = tempNicArray;
-
-                    // Name Array Update
-                    String[] tempNameArray = new String[nameArray.length + 1];
-                    for (int i = 0; i < nameArray.length; i++) {
-                        tempNameArray[i] = nameArray[i];
-                    }
-                    tempNameArray[tempNameArray.length - 1] = name;
-                    nameArray = tempNameArray;
-
-                    // RegNo Array Update
-                    String[] tempRegNoArray = new String[regNoArray.length + 1];
-                    for (int i = 0; i < regNoArray.length; i++) {
-                        tempRegNoArray[i] = regNoArray[i];
-                    }
-                    tempRegNoArray[tempRegNoArray.length - 1] = newRegNo;
-                    regNoArray = tempRegNoArray;
+                    Student newStudent = new Student(newRegNo, name, nic, -2, -2);
+                    addStudentToArray(newStudent);
 
                     System.out.println("\n\n\tStudent Registration No - " + newRegNo);
                     System.out.println("\nStudent was successfully added to the system");
-
                 } else {
                     System.out.println("Invalid Lecture Mode!");
                 }
-
-                // Add Another Student
-                System.out.print("\nDo you want to add another student (Y/N): ");
-                String select = input.next().toUpperCase();
-                if (select.equals("Y")) {
-                    clearConsole();
-                    addStudent();
-                } else {
-                    clearConsole();
-                    homePage();
-                }
-
             } else {
                 System.out.println("\n\n\tAlready added student (NIC Exists)...");
-                System.out.print("\nDo you want to try again (Y/N): ");
-                String select = input.next().toUpperCase();
-                if (select.equals("Y")) {
-                    clearConsole();
-                    addStudent();
-                } else {
-                    clearConsole();
-                    homePage();
-                }
             }
         } else {
             System.out.println("\n\tStudents cannot be added. Enrollment is closed for Batch " + batchNo);
-            System.out.print("\nDo you want to try another batch (Y/N): ");
-            String select = input.next().toUpperCase();
-            if (select.equals("Y")) {
-                clearConsole();
-                addStudent();
-            } else {
-                clearConsole();
-                homePage();
-            }
         }
+        System.out.print("\nDo you want to add another student (Y/N): ");
+        continueAdding = input.next().equalsIgnoreCase("Y");
+
+    } while (continueAdding);
+
+    clearConsole();
+    homePage();
     }
 
     // Update Student Method
