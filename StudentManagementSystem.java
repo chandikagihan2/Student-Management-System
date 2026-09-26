@@ -519,8 +519,8 @@ private static Student[] studentArray  = new Student[] {
 
         int index = -1;
 
-        for (int i = 0; i < regNoArray.length; i++) {
-            if (regNoArray[i].equalsIgnoreCase(regNo)) {
+        for (int i = 0; i < studentArray.length; i++) {
+            if (studentArray[i].getRegNo().equalsIgnoreCase(regNo)) {
                 index = i;
                 break;
             }
@@ -540,39 +540,28 @@ private static Student[] studentArray  = new Student[] {
             return;
         }
 
-        int prfMarks = prfArray[index];
-        int dbmsMarks = dbmsArray[index];
+       Student s = studentArray[index];
+            String prfText;
+            if (s.getPrfMarks() < 0) {
+                prfText = "N/A";
+            } else {
+                prfText = String.valueOf(s.getPrfMarks());
+            }
 
-        String prfStr = "";
-        if (prfMarks == -1) {
-            prfStr = "Absent";
-        } else if (prfMarks == -2) {
-            prfStr = "Not conducted";
-        } else {
-            prfStr = String.valueOf(prfMarks);
-        }
-
-        String dbmsStr = "";
-        if (dbmsMarks == -1) {
-            dbmsStr = "Absent";
-        } else if (dbmsMarks == -2) {
-            dbmsStr = "Not conducted";
-        } else {
-            dbmsStr = String.valueOf(dbmsMarks);
-        }
-
-        // GPA calc
-        double prfGpa = getGPAValue(prfMarks);
-        double dbmsGpa = getGPAValue(dbmsMarks);
-        double finalGpa = (prfGpa + dbmsGpa) / 2.0;
+            String dbmsText;
+            if (s.getDbmsMarks() < 0) {
+                dbmsText = "N/A";
+            } else {
+                dbmsText = String.valueOf(s.getDbmsMarks());
+            }
 
         // Profile create 
-        System.out.println("\n\tRegistration no      : " + regNoArray[index]);
-        System.out.println("\tStudent Name         : " + nameArray[index]);
-        System.out.println("\tStudent NIC          : " + nicArray[index]);
-        System.out.println("\tStudent PRF Marks    : " + prfStr);
-        System.out.println("\tStudent DBMS Marks   : " + dbmsStr);
-        System.out.printf("\tStudent GPA          : %.2f\n", finalGpa);
+        System.out.println("\n\tRegistration no      : " + studentArray[index].getRegNo());
+        System.out.println("\tStudent Name         : " + studentArray[index].getName());
+        System.out.println("\tStudent NIC          : " + studentArray[index].getNic());
+        System.out.println("\tStudent PRF Marks    : " + prfText);
+        System.out.println("\tStudent DBMS Marks   : " + dbmsText);
+        System.out.printf("\tStudent GPA          : %.2f\n",s.getGpa());
 
         System.out.print("\nDo you want to search another student details (Y/N): ");
         String select = input.next().toUpperCase();
