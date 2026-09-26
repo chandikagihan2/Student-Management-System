@@ -6,13 +6,6 @@ class student{
     private int prfMarks;
     private int dbmsMark;
 
-<<<<<<< HEAD
-class students{
-
-
-}
-class batch{
-=======
     public Student (String regNo,String name,String nic,int prfMarks,int dbmsMarks){
         this.regNo = regNo;
         this.name = name;
@@ -47,19 +40,46 @@ class batch{
     public void setDbmsMarks(int dbmsMarks) { 
         this.dbmsMarks = dbmsMarks; 
     }
-    
+    public double getGPA() {
+        double prfGpa = createGPA(prfMarks);
+        double dbmsGpa = createGPA(dbmsMarks);
+        return (prfGpa + dbmsGpa) / 2.0;
+    }
+
+    private double createGPA(int marks) {
+        if (marks < 0) return 0.0;
+        int[] ranges = {90, 80, 75, 70, 65, 60, 55, 50, 45, 40, 30, 20};
+        double[] gpa = {4.25, 4.00, 3.70, 3.30, 3.00, 2.70, 2.30, 2.00, 1.70, 1.30, 1.00, 0.70};
+
+        for (int i = 0; i < ranges.length; i++) {
+            if (marks >= ranges[i]) {
+                return gpa[i];
+            }
+        }
+        return 0.0;
+    }
 }
 class Batch{
+    private int batchNo;
+    private int status;
 
->>>>>>> dd24c4b921b9368e4d6c3a72346c5c07acc68a76
+    public Batch(int batchNo, int status) {
+        this.batchNo = batchNo;
+        this.status = status;
+    }
 
-
+    public int getBatchNo() { 
+		return batchNo; 
+	}
     
+    public int getStatus() { 
+		return status; 
+	}
+    
+    public void setStatus(int status) { 
+		this.status = status; 
+	}
 }
-<<<<<<< HEAD
-
-=======
->>>>>>> dd24c4b921b9368e4d6c3a72346c5c07acc68a76
 class StudentManagementSystem {
 
     // Batch status variables
