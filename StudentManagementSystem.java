@@ -852,85 +852,72 @@ private static Student[] studentArray  = new Student[] {
     }
     // DBMS Marks Update Method
     public static void dbmsMarksUpdate() {
-        System.out.println("-----------------------------------------------------------------");
-        System.out.println("|\t\t\tDBMS Marks Update\t\t\t|");
-        System.out.println("-----------------------------------------------------------------\n");
-
         Scanner input = new Scanner(System.in);
-        System.out.print("Enter Student Registration No: ");
-        String regNo = input.next();
+        boolean continueUpdating = true;
 
-        int index = -1;
-        for (int i = 0; i < regNoArray.length; i++) {
-            if (regNoArray[i].equalsIgnoreCase(regNo)) {
-                index = i;
-                break;
-            }
-        }
+        do {
+            clearConsole();
+            System.out.println("-----------------------------------------------------------------");
+            System.out.println("|\t\t\tDBMS Marks Update\t\t\t|");
+            System.out.println("-----------------------------------------------------------------\n");
 
-        if (index == -1) {
-            System.out.println("\n\tThis student does not exist in the system.");
-            System.out.print("\nDo you want to update another student DBMS marks (Y/N): ");
-            String select = input.next().toUpperCase();
-            if (select.equals("Y")) {
-                clearConsole();
-                dbmsMarksUpdate();
-            } else {
-                clearConsole();
-                gradeManagement();
-            }
-            return;
-        }
+            System.out.print("Enter Student Registration No: ");
+            String regNo = input.next();
 
-        System.out.println("\n\tRegistration no      : " + regNoArray[index]);
-        System.out.println("\tStudent Name         : " + nameArray[index]);
-        System.out.println("\tStudent NIC          : " + nicArray[index]);
-
-        int currentMark = dbmsArray[index];
-
-        if (currentMark >= 0) {
-            System.out.println("\nThis student has already completed the DBMS module.");
-            System.out.println("\tDBMS Marks : " + currentMark);
-            System.out.print("\nDo you want to update this student's DBMS marks? ");
-            String updateChoice = input.next().toUpperCase();
-            if (!updateChoice.equals("Y")) {
-                System.out.print("\nDo you want to update another student DBMS marks (Y/N): ");
-                String select = input.next().toUpperCase();
-                if (select.equals("Y")) {
-                    clearConsole();
-                    dbmsMarksUpdate();
-                } else {
-                    clearConsole();
-                    gradeManagement();
+            int foundIndex = -1;
+            for (int i = 0; i < studentArray.length; i++) {
+                if (studentArray[i].getRegNo().equalsIgnoreCase(regNo)) {
+                    foundIndex = i;
+                    break;
                 }
-                return;
             }
-        } else if (currentMark == -1) {
-            System.out.println("\nThis student was absent from the exam. You can update the marks if they participate in it...");
-        }
 
-        int newMark = -1;
-        while (true) {
-            System.out.print("Enter DBMS Marks : ");
-            newMark = input.nextInt();
-            if (newMark >= 0 && newMark <= 100) {
-                break;
+            if (foundIndex == -1) {
+                System.out.println("\n\tThis student does not exist in the system.");
+            } else {
+                Student foundStudent = studentArray[foundIndex];
+                System.out.println("\n\tRegistration no      : " + foundStudent.getRegNo());
+                System.out.println("\tStudent Name         : " + foundStudent.getName());
+                System.out.println("\tStudent NIC          : " + foundStudent.getNic());
+
+                int currentMark = foundStudent.getDbmsMarks();
+                boolean canUpdate = true;
+
+                if (currentMark >= 0) {
+                    System.out.println("\nThis student has already completed the DBMS module.");
+                    System.out.println("\tDBMS Marks : " + currentMark);
+                    System.out.print("\nDo you want to update this student's DBMS marks (Y/N)? ");
+                    String updateChoice = input.next().toUpperCase();
+                    if (!updateChoice.equals("Y")) {
+                        canUpdate = false;
+                    }
+                } else if (currentMark == -1) {
+                    System.out.println("\nThis student was absent from the exam. You can update the marks if they participate in it...");
+                }
+
+                if (canUpdate) {
+                    int newMark = -1;
+                    while (true) {
+                        System.out.print("\nEnter DBMS Marks : ");
+                        newMark = input.nextInt();
+                        if (newMark >= 0 && newMark <= 100) {
+                            break;
+                        }
+                        System.out.println("Invalid marks! Please enter between 0 and 100.\n");
+                    }
+
+                    foundStudent.setDbmsMarks(newMark);
+                    System.out.println("\n\tThis student DBMS Marks updated successfully...");
+                }
             }
-            System.out.println("Invalid marks! Please enter between 0 and 100.\n");
-        }
 
-        dbmsArray[index] = newMark;
-        System.out.println("\n\tThis student DBMS Marks updated successfully...");
+            System.out.print("\nDo you want to update another student DBMS marks (Y/N): ");
+            continueUpdating = input.next().equalsIgnoreCase("Y");
 
-        System.out.print("\nDo you want to update another student DBMS marks (Y/N): ");
-        String select = input.next().toUpperCase();
-        if (select.equals("Y")) {
-            clearConsole();
-            dbmsMarksUpdate();
-        } else {
-            clearConsole();
-            gradeManagement();
-        }
+        } while (continueUpdating);
+
+        clearConsole();
+        gradeManagement();
     }
 
     // Report Generator Menu
