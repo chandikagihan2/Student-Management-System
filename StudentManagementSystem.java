@@ -265,8 +265,8 @@ private static Student[] studentArray  = new Student[] {
 
     // Method to check if NIC already exists
     public static boolean checkNIC(String nic) {
-        for (int i = 0; i < nicArray.length; i++) {
-            if (nicArray[i].equals(nic)) {
+        for (int i = 0; i < studentArray.length; i++) {
+            if (studentArray[i].getNic().equalsIgnoreCase(nic)) {
                 return false; 
             }
         }
