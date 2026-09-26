@@ -668,16 +668,14 @@ private static Student[] studentArray  = new Student[] {
             }
         }
 
-        if (exists) {
-            System.out.println("\nBatch is already added to the system.");
+        if (!exists) {
+            Batch[] temp = new Batch[batchArray.length + 1];
+		for (int i = 0; i < batchArray.length; i++) temp[i] = batchArray[i];
+            temp[temp.length - 1] = new Batch(batchNo, ENROLLMENT_OPEN);
+            batchArray = temp;
+            System.out.println("\nBatch was successfully added.");
         } else {
-            batchNameArray = Arrays.copyOf(batchNameArray, batchNameArray.length + 1);
-            batchNameArray[batchNameArray.length - 1] = batchNo;
-
-            batchStatusArray = Arrays.copyOf(batchStatusArray, batchStatusArray.length + 1);
-            batchStatusArray[batchStatusArray.length - 1] = ENROLLMENTOPEN;
-
-            System.out.println("\nBatch was successfully added to the system.");
+            System.out.println("\nBatch already exists!");
         }
 
         System.out.print("\nDo you want to add another batch to the system (Y/N): ");
@@ -702,8 +700,8 @@ private static Student[] studentArray  = new Student[] {
         int batchNo = input.nextInt();
 
         int index = -1;
-        for (int i = 0; i < batchNameArray.length; i++) {
-            if (batchNameArray[i] == batchNo) {
+        for (int i = 0; i < batchArray.length; i++) {
+            if (batchArray[i].getBatchNo() == batchNo) {
                 index = i;
                 break;
             }
@@ -769,9 +767,9 @@ private static Student[] studentArray  = new Student[] {
         System.out.printf("%-5s %-12s %-15s %-20s\n", "No", "Batch No", "Student Count", "Status");
         System.out.println("----------------------------------------------------");
 
-        for (int i = 0; i < batchNameArray.length; i++) {
+        for (Batch b : batchArray) {
             int count = 0;
-            int bNo = batchNameArray[i];
+            int bNo = b.getBatchNo();
 
             for (int j = 0; j < regNoArray.length; j++) {
                 String reg = regNoArray[j];
@@ -787,7 +785,7 @@ private static Student[] studentArray  = new Student[] {
             }
 
             String statusStr = "";
-            if (batchStatusArray[i] == ENROLLMENTOPEN) {
+            if (b.getStatus() == ENROLLMENTOPEN) {
                 statusStr = "ENROLLMENT OPEN";
             } else {
                 statusStr = "ENROLLMENT CLOSED";
