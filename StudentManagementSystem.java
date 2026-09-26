@@ -962,110 +962,106 @@ private static Student[] studentArray  = new Student[] {
             System.out.println("|\t\t\tStudent Resistration Reoprt\t\t\t\t|");
             System.out.println("----------------------------------------------------------------------------------\n");
 
-            int length = regNoArray.length;
-            String[] tempRegNo = new String[length];
-            String[] tempName = new String[length];
-            String[] tempNic = new String[length];
-            int[] tempPrf = new int[length];
-            int[] tempDbms = new int[length];
+                System.out.println("---------------------------------------------------------------------------------------------");
+    System.out.printf("%-5s %-15s %-25s %-15s %-10s %-10s %-8s\n", "No", "Reg No", "Name", "NIC", "PRF Mark", "DBMS Mark", "GPA");
+    System.out.println("---------------------------------------------------------------------------------------------");
 
-            for (int i = 0; i < length; i++) {
-                tempRegNo[i] = regNoArray[i];
-                tempName[i] = nameArray[i];
-                tempNic[i] = nicArray[i];
-                tempPrf[i] = prfArray[i];
-                tempDbms[i] = dbmsArray[i];
-            }
+    for (int i = 0; i < studentArray.length; i++) {
+        Student s = studentArray[i];
+				
+		String prfText;
+		if (s.getPrfMarks() == -1) {
+			prfText = "Absent";
+		} else if (s.getPrfMarks() == -2) {
+			prfText = "Not conduct";
+		} else {
+			prfText = String.valueOf(s.getPrfMarks());
+		}
+		
+		String dbmsText;
+		if (s.getDbmsMarks() == -1) {
+			dbmsText = "Absent";
+		} else if (s.getDbmsMarks() == -2) {
+			dbmsText = "Not conduct";
+		} else {
+			dbmsText = String.valueOf(s.getDbmsMarks());
+		}
+        
+        System.out.printf("%-5d %-15s %-25s %-15s %-10s %-10s %-8.2f\n", 
+            (i + 1), s.getRegNo(),s.getNic(), s.getName(), prfText, dbmsText, s.getGPA());
+    }
 
-            for (int i = 0; i < length - 1; i++) {
-                for (int j = i + 1; j < length; j++) {
-                    if (tempName[i].compareToIgnoreCase(tempName[j]) > 0) {
-                        String tName = tempName[i];
-                        tempName[i] = tempName[j];
-                        tempName[j] = tName;
+        Scanner input = new Scanner(System.in);
+        System.out.print("\nGo to homepage (Y/N): ");
+        if (input.next().equalsIgnoreCase("Y")) {
+            clearConsole(); 
+            homePage();
+        } else {
+            clearConsole(); 
+            reportGenerator();
+        }
+    }
 
-                        String tReg = tempRegNo[i];
-                        tempRegNo[i] = tempRegNo[j];
-                        tempRegNo[j] = tReg;
-
-                        String tNic = tempNic[i];
-                        tempNic[i] = tempNic[j];
-                        tempNic[j] = tNic;
-
-                        int tPrf = tempPrf[i];
-                        tempPrf[i] = tempPrf[j];
-                        tempPrf[j] = tPrf;
-
-                        int tDbms = tempDbms[i];
-                        tempDbms[i] = tempDbms[j];
-                        tempDbms[j] = tDbms;
-                    }
-                }
-            }
-
-            System.out.println("----------------------------------------------------------------------------------------------------------");
-            System.out.printf("%-5s %-18s %-30s %-18s %-12s %-12s %-8s\n", "No", "Registration No", "Student Name", "NIC", "PRF Marks", "DBMS Marks", "GPA");
-            System.out.println("----------------------------------------------------------------------------------------------------------");
-
-            for (int i = 0; i < length; i++) {
-                double gpa = (getGPAValue(tempPrf[i]) + getGPAValue(tempDbms[i])) / 2.0;
-                String prfStr = (tempPrf[i] < 0) ? String.valueOf(tempPrf[i]) : String.valueOf(tempPrf[i]);
-                String dbmsStr = (tempDbms[i] < 0) ? String.valueOf(tempDbms[i]) : String.valueOf(tempDbms[i]);
-
-                System.out.printf("%-5d %-18s %-30s %-18s %-12s %-12s %-8.2f\n", (i + 1), tempRegNo[i], tempName[i], tempNic[i], prfStr, dbmsStr, gpa);
-            }
-            System.out.println("-----------------------------------------------------------------------------------------------------------");
-
-            Scanner input = new Scanner(System.in);
-            System.out.print("\nDo you want to go to homepage (Y/N): ");
-            if (input.next().equalsIgnoreCase("Y")) {
-                clearConsole();
-                homePage();
-            } else {
-                clearConsole();
-                studentRegistrtionReport();
-            }   
-        }while(true);
     }
     //batchWiseStudentReport    
     public static void batchWiseStudentReport() {
-    System.out.println("----------------------------------------------------------------------------------");
-    System.out.println("|\t\t\tBatch-wise Student Report\t\t|");
-    System.out.println("----------------------------------------------------------------------------------");
-    
-        for (int i = 0; i < batchNameArray.length; i++){
-                System.out.println("[" + (i + 1) + "] " + batchNameArray[i] + " Batch");
+        System.out.println("----------------------------------------------------------------------------------");
+        System.out.println("|\t\t\tBatch-wise Student Report\t\t\t|");
+        System.out.println("----------------------------------------------------------------------------------");
+
+        for (int i = 0; i < batchArray.length; i++) {
+            System.out.println("[" + (i + 1) + "] " + batchArray[i].getBatchNo() + " Batch");
         }
-        System.out.println("[" + (batchNameArray.length + 1) + "] Exit");
+        System.out.println("[" + (batchArray.length + 1) + "] Exit");
 
         Scanner input = new Scanner(System.in);
         System.out.print("\nEnter an option to continue > ");
         int index = input.nextInt();
 
-        if (index > 0 && index <= batchNameArray.length) {
-            int selectedBatch = batchNameArray[index- 1];
+        if (index > 0 && index <= batchArray.length) {
+            int selectedBatch = batchArray[index - 1].getBatchNo();
             clearConsole();
 
             System.out.println("-------------------------------------------------------------------------------------------------");
             System.out.println("|\t\t\t\t" + selectedBatch + " Batch Student Report\t\t\t\t\t|");
             System.out.println("-------------------------------------------------------------------------------------------------\n");
 
-            System.out.println("---------------------------------------------------------------------------------------------------------");
-            System.out.printf("%-5s %-18s %-30s %-18s %-12s %-12s %-8s\n", "No", "Registration No", "Student Name", "NIC", "PRF Marks", "DBMS Marks", "GPA");
-            System.out.println("---------------------------------------------------------------------------------------------------------");
+            System.out.println("---------------------------------------------------------------------------------------------");
+            System.out.printf("%-5s %-15s %-25s %-15s %-10s %-10s %-8s\n", "No", "Reg No", "Name", "NIC", "PRF Mark", "DBMS Mark", "GPA");
+            System.out.println("---------------------------------------------------------------------------------------------");
 
             int count = 1;
-            for (int i = 0; i < regNoArray.length; i++) {
-                if (regNoArray[i].length() >= 7) {
-                    int batchId = Integer.parseInt(regNoArray[i].substring(4, 7));
+            for (Student s : studentArray) {
+                if (s != null && s.getRegNo() != null && s.getRegNo().length() >= 7) {
+                    int batchId = Integer.parseInt(s.getRegNo().substring(4, 7));
 
                     if (batchId == selectedBatch) {
-                        double gpa = (getGPAValue(prfArray[i]) + getGPAValue(dbmsArray[i])) / 2.0;
-                        System.out.printf("%-5d %-18s %-30s %-18s %-12d %-12d %-8.2f\n", count++, regNoArray[i], nameArray[i], nicArray[i], prfArray[i], dbmsArray[i], gpa);
+                        // PRF Marks format logic
+                        String prfText;
+                        if (s.getPrfMarks() == -1) {
+                            prfText = "Absent";
+                        } else if (s.getPrfMarks() == -2) {
+                            prfText = "Not conduct";
+                        } else {
+                            prfText = String.valueOf(s.getPrfMarks());
+                        }
+
+                        // DBMS Marks format logic
+                        String dbmsText;
+                        if (s.getDbmsMarks() == -1) {
+                            dbmsText = "Absent";
+                        } else if (s.getDbmsMarks() == -2) {
+                            dbmsText = "Not conduct";
+                        } else {
+                            dbmsText = String.valueOf(s.getDbmsMarks());
+                        }
+
+                        System.out.printf("%-5d %-15s %-25s %-15s %-10s %-10s %-8.2f\n",
+                                count++, s.getRegNo(), s.getName(), s.getNic(), prfText, dbmsText, s.getGPA());
                     }
                 }
             }
-            System.out.println("---------------------------------------------------------------------------------------------------------");
+            System.out.println("---------------------------------------------------------------------------------------------");
 
             System.out.print("\nDo you want to another batch report (Y/N): ");
             if (input.next().equalsIgnoreCase("Y")) {
@@ -1080,40 +1076,34 @@ private static Student[] studentArray  = new Student[] {
             reportGenerator();
         }
     }
-        
+      
     
     public static void industryTrainingReport() {
     System.out.println("--------------------------------------------------------------------------------------------------");
     System.out.println("|\t\t\tIndustry Training Eligibility Student Report\t\t\t\t|");
     System.out.println("--------------------------------------------------------------------------------------------------\n");
 
-        System.out.println("-------------------------------------------------------------------------------------------------------");
-        System.out.printf("%-5s %-18s %-30s %-18s %-12s %-12s %-8s\n", "No", "Registration No", "Student Name", "NIC", "PRF Marks", "DBMS Marks", "GPA");
-        System.out.println("-------------------------------------------------------------------------------------------------------");
+     System.out.println("---------------------------------------------------------------------------------------------");
+    System.out.printf("%-5s %-15s %-25s %-15s %-10s %-10s %-8s\n", "No", "Reg No", "Name", "NIC", "PRF Mark", "DBMS Mark", "GPA");
+    System.out.println("---------------------------------------------------------------------------------------------");
 
         int count = 1;
-        for (int i = 0; i < regNoArray.length; i++) {
-            int prf = prfArray[i];
-            int dbms = dbmsArray[i];
-            double gpa = (getGPAValue(prf) + getGPAValue(dbms)) / 2.0;
-
-            if (gpa > 3.25 && prf > 50 && dbms > 50) {
-                System.out.printf("%-5d %-18s %-30s %-18s %-12d %-12d %-8.2f\n", count++, regNoArray[i], nameArray[i], nicArray[i], prf, dbms, gpa);
+        for (Student s : studentArray) {
+            if (s.getGPA() > 3.25 && s.getPrfMarks() > 50 && s.getDbmsMarks() > 50) {
+                System.out.printf("%-5d %-15s %-25s %-15s %-10d %-10d %-8.2f\n", count++, s.getRegNo(), s.getNic(),s.getName(), s.getPrfMarks(), s.getDbmsMarks(), s.getGPA());
             }
         }
-        System.out.println("--------------------------------------------------------------------------------------------------------");
 
         Scanner input = new Scanner(System.in);
-        System.out.print("\nDo you want to go to homepage (Y/N): ");
+        System.out.print("\nGo to homepage (Y/N): ");
         if (input.next().equalsIgnoreCase("Y")) {
-            clearConsole();
+            clearConsole(); 
             homePage();
         } else {
-            clearConsole();
+            clearConsole(); 
             reportGenerator();
         }
-    }    
-    
+    }   
 
     // Main Method
     public static void main(String args[]) {
