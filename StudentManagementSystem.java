@@ -1,5 +1,15 @@
 import java.util.*;
 
+class students{
+
+
+}
+class batch{
+
+
+    
+}
+
 class StudentManagementSystem {
 
     // Batch status variables
