@@ -440,15 +440,13 @@ private static Student[] studentArray  = new Student[] {
         String regNo = input.next();
 
         int index = -1;
-
         // Student Search
-        for (int i = 0; i < regNoArray.length; i++) {
-            if (regNoArray[i].equals(regNo)) {
+        for (int i = 0; i < studentArray.length; i++) {
+            if (studentArray[i].equals(regNo)) {
                 index = i;
                 break;
             }
         }
-
         // Student not found
         if (index == -1) {
             System.out.println("\nThis student not exist in the system");
@@ -465,8 +463,9 @@ private static Student[] studentArray  = new Student[] {
         }
 
         // Student information
-        System.out.println("\n\tStudent Name : " + nameArray[index]);
-        System.out.println("\tStudent NIC  : " + nicArray[index]);
+        Student s = studentArray[index];
+        System.out.println("\n\tStudent Name : " + s.getName());
+        System.out.println("\tStudent NIC  : " + s.getNic());
 
         System.out.println("\nWhat do you want to update ?");
         System.out.println("\t(01) Student Name");
@@ -478,41 +477,24 @@ private static Student[] studentArray  = new Student[] {
         // Student Name Update
         if (option == 1) {
             clearConsole();
-            System.out.println("Student Name Update");
-            System.out.println("=====================");
-            System.out.println("\nRegistration No   : " + regNoArray[index]);
-            System.out.println("Student NIC       : " + nicArray[index]);
-            System.out.println("Student Current Name : " + nameArray[index]);
-
-            System.out.print("\nEnter student name to update - ");
+           System.out.print("\nEnter student name to update - ");
             input.nextLine();
-            String newName = input.nextLine();
-
-            nameArray[index] = newName;
-
+            s.setName(input.nextLine());
             System.out.println("\n\tStudent name updated successfully...");
 
         // Student NIC Update
         } else if (option == 2) {
             clearConsole();
-            System.out.println("Student NIC Update");
-            System.out.println("====================");
-            System.out.println("\nRegistration No   : " + regNoArray[index]);
-            System.out.println("Student Name      : " + nameArray[index]);
-            System.out.println("Student Current NIC : " + nicArray[index]);
-
             System.out.print("\nEnter student NIC to update - ");
             String newNic = input.next();
 
             // NIC check
             if (checkNIC(newNic)) {
-                nicArray[index] = newNic;
+                s.setNic (newNic);
                 System.out.println("\n\tStudent NIC updated successfully...");
             } else {
                 System.out.println("\n\tThis student is already added to the system...");
             }
-        } else {
-            System.out.println("\nInvalid Option!");
         }
 
         System.out.print("\nDo you want to update another student details (Y/N): ");
