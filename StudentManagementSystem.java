@@ -586,98 +586,31 @@ private static Student[] studentArray  = new Student[] {
 
         int index = -1;
 
-        for (int i = 0; i < regNoArray.length; i++) {
-            if (regNoArray[i].equalsIgnoreCase(regNo)) {
+        for (int i = 0; i < studentArray.length; i++) {
+            if (studentArray[i].getRegNo().equalsIgnoreCase(regNo)) {
                 index = i;
                 break;
             }
         }
 
-        if (index == -1) {
-            System.out.println("\n\tThis student does not exist in the system.");
-            System.out.print("\nDo you want to delete another student profile (Y/N): ");
-            String select = input.next().toUpperCase();
-            if (select.equals("Y")) {
-                clearConsole();
-                deleteStudentProfile();
-            } else {
-                clearConsole();
-                studentManagement();
-            }
-            return;
-        }
-
-        int prfMarks = prfArray[index];
-        int dbmsMarks = dbmsArray[index];
-
-        String prfStr = "";
-        if (prfMarks == -1) {
-            prfStr = "Absent";
-        } else if (prfMarks == -2) {
-            prfStr = "Not conducted";
-        } else {
-            prfStr = String.valueOf(prfMarks);
-        }
-
-        String dbmsStr = "";
-        if (dbmsMarks == -1) {
-            dbmsStr = "Absent";
-        } else if (dbmsMarks == -2) {
-            dbmsStr = "Not conducted";
-        } else {
-            dbmsStr = String.valueOf(dbmsMarks);
-        }
-
-        double prfGpa = getGPAValue(prfMarks);
-        double dbmsGpa = getGPAValue(dbmsMarks);
-        double finalGpa = (prfGpa + dbmsGpa) / 2.0;
-
-        System.out.println("\n\tRegistration no      : " + regNoArray[index]);
-        System.out.println("\tStudent Name         : " + nameArray[index]);
-        System.out.println("\tStudent NIC          : " + nicArray[index]);
-        System.out.println("\tStudent PRF Marks    : " + prfStr);
-        System.out.println("\tStudent DBMS Marks   : " + dbmsStr);
-        System.out.printf("\tStudent GPA          : %.2f\n\n", finalGpa);
-
-        System.out.print("Do you want to delete this student profile (Y/N): ");
-        String confirm = input.next().toUpperCase();
-
-        if (confirm.equals("Y")) {
-            String[] tempRegNo = new String[regNoArray.length - 1];
-            String[] tempName = new String[nameArray.length - 1];
-            String[] tempNic = new String[nicArray.length - 1];
-            int[] tempPrf = new int[prfArray.length - 1];
-            int[] tempDbms = new int[dbmsArray.length - 1];
-
+          if (index != -1) {
+            Student[] temp = new Student[studentArray.length - 1];
             int k = 0;
-            for (int i = 0; i < regNoArray.length; i++) {
-                if (i == index) {
-                    continue;
-                }
-                tempRegNo[k] = regNoArray[i];
-                tempName[k] = nameArray[i];
-                tempNic[k] = nicArray[i];
-                tempPrf[k] = prfArray[i];
-                tempDbms[k] = dbmsArray[i];
-                k++;
+            for (int i = 0; i < studentArray.length; i++) {
+                if (i == index) continue;
+                temp[k++] = studentArray[i];
             }
-
-            regNoArray = tempRegNo;
-            nameArray = tempName;
-            nicArray = tempNic;
-            prfArray = tempPrf;
-            dbmsArray = tempDbms;
-
+            studentArray = temp;
             System.out.println("\n\tStudent was successfully deleted from the system.");
+        } else {
+            System.out.println("\n\tThis student does not exist in the system.");
         }
-
         System.out.print("\nDo you want to delete another student profile (Y/N): ");
-        String select = input.next().toUpperCase();
-        if (select.equals("Y")) {
-            clearConsole();
+        if (input.next().equalsIgnoreCase("Y")) {
+            clearConsole(); 
             deleteStudentProfile();
         } else {
-            clearConsole();
+            clearConsole(); 
             studentManagement();
         }
     }
@@ -689,7 +622,7 @@ private static Student[] studentArray  = new Student[] {
         System.out.println("-------------------------------------------------------------------------\n");
         System.out.println("[1] Add Batch");
         System.out.println("[2] Update Batch ");
-        System.out.println("[3] Vist Batches");
+        System.out.println("[3] View Batches");
         System.out.println("[4] Exit");
         
         Scanner input = new Scanner(System.in);
@@ -728,8 +661,8 @@ private static Student[] studentArray  = new Student[] {
         int batchNo = input.nextInt();
 
         boolean exists = false;
-        for (int i = 0; i < batchNameArray.length; i++) {
-            if (batchNameArray[i] == batchNo) {
+        for (Batch b : batchArray) {
+            if (b.getBatchNo() == batchNo) {
                 exists = true;
                 break;
             }
