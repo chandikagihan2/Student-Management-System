@@ -255,15 +255,11 @@ private static Student[] studentArray  = new Student[] {
 
     // Method to check batch status
     public static boolean checkBatchStatus(int batchNo) {
-        for (int i = 0; i < batchNameArray.length; i++) {
-            if (batchNameArray[i] == batchNo) {
-                if (batchStatusArray[i] == ENROLLMENTOPEN) {
-                    return true;
-                } else {
-                    return false;
+        for (int i = 0; i < batchArray.length; i++) {
+            if (batchArray[i].getBatchNo() == batchNo) {
+                return batchArray[i].getStatus() == ENROLLMENT_OPEN;
                 }
             }
-        }
         return false;
     }
 
