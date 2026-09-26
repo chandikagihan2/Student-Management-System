@@ -87,8 +87,14 @@ class StudentManagementSystem {
     public static final int ENROLLMENTCLOSED = 0;
 
     // Batch data arrays
-    public static int[] batchNameArray = { 105, 106, 107, 108, 109, 110 };
-    public static int[] batchStatusArray = { 0, 0, 0, 0, 1, 1 };
+    public static Batch[] batchNameArray = { 
+        new Batch(105, ENROLLMENT_CLOSED),
+        new Batch(106, ENROLLMENT_CLOSED),
+        new Batch(107, ENROLLMENT_CLOSED),
+        new Batch(108, ENROLLMENT_CLOSED),
+        new Batch(109, ENROLLMENT_OPEN),
+        new Batch(110, ENROLLMENT_OPEN) };
+
     
     // Marks data arrays
     public static int[] prfMarksArray = new int[0];
